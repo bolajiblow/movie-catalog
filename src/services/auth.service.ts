@@ -1,6 +1,6 @@
-import { AuthCredentials } from "../interfaces/auth.model";
-import { HttpResponse } from "../interfaces/httpResponse.model";
-import { httpStatusCode } from "../interfaces/httpStatus.model";
+import { AuthCredentials } from "../interfaces/auth.interface";
+import { HttpResponse } from "../interfaces/httpResponse.interface";
+import { httpStatusCode } from "../interfaces/httpStatus.interface";
 import { httpClient } from "./httpClient";
 
 export const loginService = async ({ email, password }: AuthCredentials) => {

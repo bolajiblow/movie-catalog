@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
-import { HttpErrorResponse, HttpResponse } from '../interfaces/httpResponse.model';
-import { httpStatusCode } from '../interfaces/httpStatus.model';
+import { HttpErrorResponse, HttpResponse } from '../interfaces/httpResponse.interface';
+import { httpStatusCode } from '../interfaces/httpStatus.interface';
 import { destroyUserSession, getAuthToken } from './auth.service';
 
 const httpClient = axios.create({
