@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { IoIosSearch } from 'react-icons/io'
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { Container } from '../components/container'
+import routes from '../pages/routes'
 
 
 import { mergeClassName } from '../utils'
@@ -83,7 +84,7 @@ export const Header = () => {
         <div className="flex items-center gap-6">
           {/* brand */}
           <h1 className="text-2xl font-semibold">
-            <Link to={'/'}>Movielia</Link>
+            <Link to={routes.home}>Movielia</Link>
           </h1>
           {/*  menu */}
           <div
@@ -102,11 +103,11 @@ export const Header = () => {
             mobile:gap-6
             "
           >
-            <Link className={getMenuClass('/movies')} to={'/movies'}>
+            <Link className={getMenuClass('/movies')} to={routes.home}>
               Movies
             </Link>
-            <Link className={getMenuClass('/tv')} to={'/tv'}>
-              TV
+            <Link className={getMenuClass('/genre')} to={routes.home}>
+              Genre
             </Link>
           </div>
         </div>

@@ -1,12 +1,11 @@
-import { createBrowserRouter,  RouterProvider } from 'react-router-dom'
+import {  Outlet } from "react-router-dom";
+import Movies from "../components/Movies";
 
 
-const router = createBrowserRouter([
-    {
-      path: "/movies",
-      element: <div>movies world</div>,
-    },
-  ]);
 export const Body = () => {
-    return <RouterProvider router={router} />;
-}
+  return (
+    <div id="movie">
+     <Outlet />
+    </div>
+  );
+};

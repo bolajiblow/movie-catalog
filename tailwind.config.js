@@ -6,7 +6,7 @@ module.exports = {
       colors: {
         primary: "#423F71",
         header: "#292841",
-        body: "#191919",
+        body: "#1C1B29",
       },
       screens: {
         mobile: {
