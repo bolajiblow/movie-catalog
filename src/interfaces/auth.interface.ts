@@ -4,7 +4,9 @@ export interface AuthCredentials {
   }
   
   export interface IUserSignUpDto {
-    fullName: string
+    first: string
+    last: string
     email: string
     password: string
   }
+  
