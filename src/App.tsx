@@ -7,6 +7,7 @@ import routes from "./pages/routes";
 import { MovieContainer } from "./pages/movie-container";
 import EachMovie from "./pages/EachMovie";
 import Movies from "./components/Movies";
+import { SearchResult } from "./components/search-results";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path : routes.home,
         element: <Movies />
+      },
+      {
+        path : routes.search,
+        element: <SearchResult keyword={""} goToSearchPage={undefined} />
       },
     ]
    

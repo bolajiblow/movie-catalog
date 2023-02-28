@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { Container } from "../components/container";
 import CreateMovieModal from "../components/createMovieModal";
+import { SearchResult } from "../components/search-results";
 import routes from "../pages/routes";
 
 import { mergeClassName } from "../utils";
@@ -90,7 +91,7 @@ export const Header = () => {
         <div className="flex items-center gap-6">
           {/* brand */}
           <h1 className="text-2xl font-semibold">
-            <Link to={routes.home}>Movielia</Link>
+            <Link to={routes.home}>Movie Catalog</Link>
           </h1>
           {/*  menu */}
           <div
@@ -145,23 +146,23 @@ export const Header = () => {
           />
           <IoIosSearch size={18}></IoIosSearch>
           {/* tmp results */}
-          {/* {isSearchFocus && keyword ? (
+          {isSearchFocus && keyword ? (
             <SearchResult
               keyword={keyword}
               goToSearchPage={goToSearchPage}
             ></SearchResult>
           ) : (
             ''
-          )} */}
+          )}
         </div>
         <div>
           <button
-            className="bg-blue-200 text-black active:bg-blue-500 
-      font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+            className="bg-primary text-white active:bg-blue-500 
+            font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
             type="button"
             onClick={() => setShowModal(true)}
           >
-            Fill Details
+            Add Movie
           </button>
         </div>
       </Container>
