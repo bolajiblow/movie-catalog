@@ -1,39 +1,48 @@
-import axios, { AxiosError, AxiosResponse } from 'axios'
-import { HttpErrorResponse, HttpResponse } from '../interfaces/httpResponse.interface';
-import { httpStatusCode } from '../interfaces/httpStatus.interface';
-import { destroyUserSession, getAuthToken } from './auth.service';
+import axios, { AxiosError, AxiosResponse } from "axios";
+import {
+  HttpErrorResponse,
+  HttpResponse,
+} from "../interfaces/httpResponse.interface";
+import { httpStatusCode } from "../interfaces/httpStatus.interface";
+import { destroyUserSession, getAuthToken } from "./auth.service";
 
 const httpClient = axios.create({
-    baseURL: process.env.REACT_APP_API_BASE_URL,
+  baseURL: process.env.REACT_APP_API_BASE_URL,
+  headers: {
+    Accept: "application/json",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Credentials": "*",
+  },
 });
-
+console.log(process.env.REACT_APP_API_BASE_URL);
 
 // Add a request interceptor
-httpClient.interceptors.request.use(function (config) {
+
+httpClient.interceptors.request.use(
+  function (config) {
     // Do something before request is sent
-    if(config.headers){
-      config.headers.Authorization =  `Bearer ${getAuthToken()}`;
+    if (config.headers) {
+      config.headers.Authorization = `Bearer ${getAuthToken()}`;
     }
     return config;
-  }, function (error) {
+  },
+  function (error) {
     // Do something with request error
     return Promise.reject(error);
-  });
-  httpClient.interceptors.response.use(
-    (response: AxiosResponse<HttpResponse>) => response,
+  }
+);
+httpClient.interceptors.response.use(
+  (response: AxiosResponse<HttpResponse>) => response,
 
-    (error: AxiosError<HttpErrorResponse>) => {
-      // const originalRequest = error.config;
-      const status = error.response ? error.response.status : null;
-      if(status === httpStatusCode.UNAUTHORIZED){
-        destroyUserSession();
-        window.location.replace('/')
-      }
-      return Promise.reject(error.response)
+  (error: AxiosError<HttpErrorResponse>) => {
+    // const originalRequest = error.config;
+    const status = error.response ? error.response.status : null;
+    if (status === httpStatusCode.UNAUTHORIZED) {
+      destroyUserSession();
+      window.location.replace("/");
     }
-)
+    return Promise.reject(error.response);
+  }
+);
 
-
-
-
-export {httpClient, axios};
+export { httpClient, axios };

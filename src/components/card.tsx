@@ -59,7 +59,7 @@ export const Card = (props: Props) => {
         )}
         <Image src={props.imageSrc} />
       </div>
-      <p className="py-1.5 line-clamp-2">{'mad max fury'}</p>
+      <p className="py-1.5 line-clamp-2">{props.title}</p>
       {props.children}
     </div>
   )

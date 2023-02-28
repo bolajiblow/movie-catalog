@@ -1,11 +1,16 @@
-import { useEffect, useRef, useState } from 'react'
-import { IoIosSearch } from 'react-icons/io'
-import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
-import { Container } from '../components/container'
-import routes from '../pages/routes'
+import { useEffect, useRef, useState } from "react";
+import { IoIosSearch } from "react-icons/io";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
+import { Container } from "../components/container";
+import CreateMovieModal from "../components/createMovieModal";
+import routes from "../pages/routes";
 
-
-import { mergeClassName } from '../utils'
+import { mergeClassName } from "../utils";
 
 const MENU_CLASS = `
   py-1
@@ -13,69 +18,70 @@ const MENU_CLASS = `
   hover:bg-primary
   rounded-md
   mobile:px-6
-`
+`;
 
 const MENU_CLASS_ACTIVE = `
   bg-primary
-`
+`;
 
 export const Header = () => {
-  const location = useLocation()
-  const [params, _] = useSearchParams()
-  const navigate = useNavigate()
+  const location = useLocation();
+  const [params, _] = useSearchParams();
+  const navigate = useNavigate();
 
-  const [pathname, setPathname] = useState('')
-  const pathnameRef = useRef('')
-  const defaultKeyword = useRef('')
+  const [showModal, setShowModal] = useState(false);
+  const [pathname, setPathname] = useState("");
+  const pathnameRef = useRef("");
+  const defaultKeyword = useRef("");
 
-  const [keyword, setKeyword] = useState('')
-  const [isSearchFocus, setSearchFocus] = useState(false)
-  const searchRef = useRef<HTMLInputElement>(null)
+  const [keyword, setKeyword] = useState("");
+  const [isSearchFocus, setSearchFocus] = useState(false);
+  const searchRef = useRef<HTMLInputElement>(null);
 
   const goToSearchPage = () => {
     if (keyword) {
-      defaultKeyword.current = keyword
-      navigate(`/search?q=${keyword}`)
-      setSearchFocus(false)
-      searchRef.current?.blur()
+      defaultKeyword.current = keyword;
+      navigate(`/search?q=${keyword}`);
+      setSearchFocus(false);
+      searchRef.current?.blur();
     }
-  }
+  };
 
   const initKeyword = () => {
-    if (pathnameRef.current === '/search') {
-      setKeyword(defaultKeyword.current)
+    if (pathnameRef.current === "/search") {
+      setKeyword(defaultKeyword.current);
     } else {
-      setKeyword('')
+      setKeyword("");
     }
-  }
+  };
 
   const onWindowClick = () => {
-    setSearchFocus(false)
-    initKeyword()
-  }
+    setSearchFocus(false);
+    initKeyword();
+  };
 
   const getMenuClass = (path: string) => {
     if (path === pathname) {
-      return mergeClassName(MENU_CLASS, MENU_CLASS_ACTIVE)
+      return mergeClassName(MENU_CLASS, MENU_CLASS_ACTIVE);
     }
 
-    return mergeClassName(MENU_CLASS, '')
-  }
+    return mergeClassName(MENU_CLASS, "");
+  };
 
   useEffect(() => {
-    setPathname(location.pathname)
-    pathnameRef.current = location.pathname
-    defaultKeyword.current = params.get('q') || ''
-    initKeyword()
-  }, [location.pathname])
+    setPathname(location.pathname);
+    pathnameRef.current = location.pathname;
+    defaultKeyword.current = params.get("q") || "";
+    initKeyword();
+  }, [location.pathname]);
 
   useEffect(() => {
-    window.addEventListener('click', onWindowClick)
+    window.addEventListener("click", onWindowClick);
 
     return () => {
-      window.removeEventListener('click', onWindowClick)
-    }
-  }, [])
+      window.removeEventListener("click", onWindowClick);
+    };
+  }, []);
 
   return (
     <div className="bg-header sticky top-0 z-[99]">
@@ -103,10 +109,10 @@ export const Header = () => {
             mobile:gap-6
             "
           >
-            <Link className={getMenuClass('/movies')} to={routes.home}>
+            <Link className={getMenuClass("/movies")} to={routes.home}>
               Movies
             </Link>
-            <Link className={getMenuClass('/genre')} to={routes.home}>
+            <Link className={getMenuClass("/genre")} to={routes.home}>
               Genre
             </Link>
           </div>
@@ -127,10 +133,10 @@ export const Header = () => {
         >
           <input
             onClick={(e) => {
-              e.stopPropagation()
-              setSearchFocus(true)
+              e.stopPropagation();
+              setSearchFocus(true);
             }}
-            onKeyDown={(e) => (e.key === 'Enter' ? goToSearchPage() : '')}
+            onKeyDown={(e) => (e.key === "Enter" ? goToSearchPage() : "")}
             onInput={(e) => setKeyword(e.currentTarget.value)}
             value={keyword}
             type="text"
@@ -148,7 +154,18 @@ export const Header = () => {
             ''
           )} */}
         </div>
+        <div>
+          <button
+            className="bg-blue-200 text-black active:bg-blue-500 
+      font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+            type="button"
+            onClick={() => setShowModal(true)}
+          >
+            Fill Details
+          </button>
+        </div>
       </Container>
+      {showModal ? <CreateMovieModal /> : null}
     </div>
-  )
-}
+  );
+};

@@ -5,10 +5,10 @@ export interface Genre {
 
 export interface MoviesRes {
     message: string
-    body: Movies
+    body: IMovies
   }
   
-  export interface Movies {
+  export interface IMovies {
     movies: Movie[]
   }
   
@@ -20,6 +20,9 @@ export interface MoviesRes {
     pgRating: number
     rating: number
     __v: number
+    imageUrl: string
+    genre: string
+    description: string
     timestamp: string
   }
 
@@ -37,6 +40,18 @@ export interface MoviesRes {
     movie: Movie
   }
   
+  export interface CreateMovie {
+    title: string,
+    producer: string,
+    releaseDate: Date,
+    pgRating: Number,
+    upvotes: Number,
+    downvotes: Number,
+    rating: Number,
+    imageUrl: string | undefined,
+    genre: string,
+    description: string,
+  }
  
   
   

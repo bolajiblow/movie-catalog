@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "../components/card";
 import { Section } from "../components/section";
 import { Image } from "../components/image";
 import movie from "../img/movie.jpg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getmovie } from "../services/movies.service";
+import { Movie } from "../interfaces/movie.interface";
 
 const EachMovie = () => {
   let navigate = useNavigate();
+  let { movie_id } = useParams()
+  const [movieList, setMovie] = useState<Movie>();
+  useEffect(() => {
+    getmovie(movie_id)
+      .then((data: any) => {
+        setMovie(data.data.body.movie);
+      })
+      .catch((err) => err);
+  }, []);
+
   return (
     <>
       {/* background */}
@@ -21,10 +33,10 @@ const EachMovie = () => {
           className="w-[200px] min-w-[200px] h-[300px] mobile:mx-auto"
         ></Image>
         <div className="px-3 flex flex-col items-start gap-3">
-          <p className="text-xl line-clamp-1">{"film.title"}</p>
+          <p className="text-xl line-clamp-1">{movieList?.title}</p>
           <ul className="flex items-center gap-3">
             <li className="px-3 py-1.5 bg-primary rounded-lg text-sm">
-              {"Title"}
+              {movieList?.title}
             </li>
           </ul>
           <p className="line-clamp-3 opacity-[0.9]">
