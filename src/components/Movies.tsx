@@ -17,7 +17,7 @@ const Movies = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [moviesList, setMovies] = useState<Movie[]>();
   const [paginateMovieList, setPaginateMoviesList] = useState<Movie[]>();
-  const pageSize = 5;
+  const pageSize = 6;
 
   useEffect(() => {
     getMovies("url")
@@ -85,7 +85,7 @@ const Movies = () => {
       ></Section>
       {/* Films */}
       <Section>
-        <div className="grid lg:grid-cols-5 sm:grid-cols-4 mobile:grid-cols-3 relative z-[11]">
+        <div className="grid lg:grid-cols-3 sm:grid-cols-4 mobile:grid-cols-3 relative z-[11]">
           {paginateList &&
             paginateList.map((movie, index) => (
               <div key={index}>
