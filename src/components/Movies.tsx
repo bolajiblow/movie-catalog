@@ -11,9 +11,6 @@ import { Movie, IMovies } from "../interfaces/movie.interface";
 
 const Movies = () => {
   let navigate = useNavigate();
-  const [q, setQ] = useState<any>("");
-  const [searchParam] = useState<string[]>(["title", "genre"]);
-  const [filterParam, setFilterParam] = useState<any>(["All"]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [moviesList, setMovies] = useState<Movie[]>();
   const pageSize = 6;
@@ -27,34 +24,7 @@ const Movies = () => {
       .catch((err) => err);
   }, []);
 
-  const searched = (movies: Movie[] | undefined) => {
-    return movies?.filter((item: any) => {
-      return searchParam.some((newItem) => {
-        return (
-          item[newItem].toString().toLowerCase().indexOf(q.toLowerCase()) > -1
-        );
-      });
-    });
-  };
-
-  function search(moviesSearch: Movie[] | undefined) {
-    return moviesSearch?.filter((item: any) => {
-      if (item?.country?.name == filterParam) {
-        return searchParam.some((newItem) => {
-          return (
-            item[newItem].toString().toLowerCase().indexOf(q.toLowerCase()) > -1
-          );
-        });
-      } else if (filterParam == "All") {
-        return searchParam.some((newItem) => {
-          return (
-            item[newItem].toString().toLowerCase().indexOf(q.toLowerCase()) > -1
-          );
-        });
-      }
-    });
-  }
-
+ 
   const paginateList = paginate(
     moviesList,
     currentPage,

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Movie } from "../interfaces/movie.interface";
 import { useGlobalContext } from "../pages/movie-container";
+import routes from "../pages/routes";
 import { getMovies } from "../services/movies.service";
 import { Image } from "./image";
 
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export const SearchResult = (props: Props) => {
+    let navigate = useNavigate()
   const [totalItem, setTotalItem] = useState(0);
   const [filteredmoviesList, setFilteredMovies] = useState<Movie[]>();
 
@@ -32,6 +34,9 @@ export const SearchResult = (props: Props) => {
       })
       .catch((err) => err);
   }, [props.keyword]);
+  const viewMovie = async (movie_id: string) => {
+    navigate(routes.each_movie_link(movie_id));
+  };
 
   return (
     <div
@@ -48,7 +53,7 @@ export const SearchResult = (props: Props) => {
       <div className="max-h-[480px] scrollbar scrollbar-thumb-primary scrollbar-track-header pr-3">
       {
         filteredmoviesList && filteredmoviesList.slice(0,3).map((movie,index) => (
-            <div key={index} className="flex items-start p-1.5 rounded-lg hover:bg-primary cursor-pointer m-1.5">
+            <div key={index} onClick={() => viewMovie(movie._id)} className="flex items-start p-1.5 rounded-lg hover:bg-primary cursor-pointer m-1.5">
             {/* image */}
             <Image
               src={movie.imageUrl}
