@@ -47,6 +47,10 @@ export const Header = () => {
       searchRef.current?.blur();
     }
   };
+  const closeModal = () => {
+    setShowModal(false)
+  }
+
 
   const initKeyword = () => {
     if (pathnameRef.current === "/search") {
@@ -113,9 +117,6 @@ export const Header = () => {
             <Link className={getMenuClass("/movies")} to={routes.home}>
               Movies
             </Link>
-            <Link className={getMenuClass("/genre")} to={routes.home}>
-              Genre
-            </Link>
           </div>
         </div>
 
@@ -166,7 +167,7 @@ export const Header = () => {
           </button>
         </div>
       </Container>
-      {showModal ? <CreateMovieModal /> : null}
+      {showModal ? <CreateMovieModal  closeModal={closeModal}/> : null}
     </div>
   );
 };

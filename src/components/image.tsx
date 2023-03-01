@@ -1,11 +1,12 @@
 
 import { CustomComponentProps } from '../interfaces/page.interface'
 import { mergeClassName } from '../utils'
-import movie_img from '../img/movie.jpg'
+import { urlImage } from '../utils'
 
 interface Props extends CustomComponentProps {
   src: string
 }
+
 
 export const Image = (props: Props) => {
   return (
@@ -16,8 +17,8 @@ export const Image = (props: Props) => {
       )}
     >
       <img
-        src={movie_img}
-        className="min-h-[200px] w-full h-full object-cover"
+        src={props.src ? props.src : urlImage}
+        className="max-h-[200px] w-full h-full object-cover"
       ></img>
     </div>
   )

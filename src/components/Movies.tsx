@@ -16,7 +16,6 @@ const Movies = () => {
   const [filterParam, setFilterParam] = useState<any>(["All"]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [moviesList, setMovies] = useState<Movie[]>();
-  const [paginateMovieList, setPaginateMoviesList] = useState<Movie[]>();
   const pageSize = 6;
 
   useEffect(() => {
@@ -57,7 +56,7 @@ const Movies = () => {
   }
 
   const paginateList = paginate(
-    searched(search(moviesList)),
+    moviesList,
     currentPage,
     pageSize
   );
@@ -91,7 +90,7 @@ const Movies = () => {
               <div key={index}>
                 <Card
                   onClick={() => viewMovie(movie._id)}
-                  imageSrc={""}
+                  imageSrc={movie.imageUrl}
                   title={movie.title}
                 ></Card>
               </div>

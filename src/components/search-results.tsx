@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Movie } from "../interfaces/movie.interface";
 import { useGlobalContext } from "../pages/movie-container";
+import { getMovies } from "../services/movies.service";
 import { Image } from "./image";
 
 interface Props {
@@ -10,12 +12,26 @@ interface Props {
 
 export const SearchResult = (props: Props) => {
   const [totalItem, setTotalItem] = useState(0);
+  const [filteredmoviesList, setFilteredMovies] = useState<Movie[]>();
 
-  const searchTimeout = useRef<any>("");
-
-  const globalContext = useGlobalContext();
-
-  const navigate = useNavigate();
+  useEffect(() => {
+    let searchTerm = props.keyword.toLowerCase();
+    getMovies("")
+      .then((data: any) => {
+        let movies: Movie[] = data.data.body.movies;
+        console.log(searchTerm);
+        console.log(movies);
+        let filtered = movies.filter(
+          (each) =>
+           ( (each.genre &&  each.genre.toLowerCase().includes(searchTerm)) ||
+           ( each.title &&  each.title.toLowerCase().includes(searchTerm)))   
+          
+        );
+        console.log(filtered)
+        setFilteredMovies(filtered);
+      })
+      .catch((err) => err);
+  }, [props.keyword]);
 
   return (
     <div
@@ -30,20 +46,24 @@ export const SearchResult = (props: Props) => {
         "
     >
       <div className="max-h-[480px] scrollbar scrollbar-thumb-primary scrollbar-track-header pr-3">
-        <div className="flex items-start p-1.5 rounded-lg hover:bg-primary cursor-pointer m-1.5">
-          {/* image */}
-          <Image
-            src={""}
-            className="h-[72px] min-w-[102px] w-[102px] rounded-md"
-          ></Image>
-          {/* title and genres */}
-          <div className="px-3 truncate">
-            <p className="text-base truncate">{"film.title"}</p>
-            <ul className="flex flex-wrap gap-x-1.5 text-sm opacity-[0.7]">
-              <li> {""}</li>
-            </ul>
+      {
+        filteredmoviesList && filteredmoviesList.slice(0,3).map((movie,index) => (
+            <div key={index} className="flex items-start p-1.5 rounded-lg hover:bg-primary cursor-pointer m-1.5">
+            {/* image */}
+            <Image
+              src={movie.imageUrl}
+              className="h-[72px] min-w-[102px] w-[102px] rounded-md"
+            ></Image>
+            {/* title and genres */}
+            <div className="px-3 truncate">
+              <p className="text-base truncate">{movie.title}</p>
+              <ul className="flex flex-wrap gap-x-1.5 text-sm opacity-[0.7]">
+                <li> {movie.genre}</li>
+              </ul>
+            </div>
           </div>
-        </div>
+        ))
+      }
       </div>
       {totalItem > 5 ? (
         <button
