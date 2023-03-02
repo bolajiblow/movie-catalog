@@ -8,6 +8,7 @@ import { getMovies } from "../services/movies.service";
 import { paginate } from "../utils";
 import Pagination from "./Pagination";
 import { Movie, IMovies } from "../interfaces/movie.interface";
+import EmptyState from "./empty-state";
 
 const Movies = () => {
   let navigate = useNavigate();
@@ -54,18 +55,21 @@ const Movies = () => {
       ></Section>
       {/* Films */}
       <Section>
-        <div className="grid lg:grid-cols-3 sm:grid-cols-4 mobile:grid-cols-3 relative z-[11]">
-          {paginateList &&
-            paginateList.map((movie, index) => (
-              <div key={index}>
-                <Card
-                  onClick={() => viewMovie(movie._id)}
-                  imageSrc={movie.imageUrl}
-                  title={movie.title}
-                ></Card>
-              </div>
-            ))}
-        </div>
+      {
+        paginateList.length > 0  ?  <div className="grid lg:grid-cols-3 sm:grid-cols-4 mobile:grid-cols-3 relative z-[11]">
+        {
+          paginateList.map((movie, index) => (
+            <div key={index}>
+              <Card
+                onClick={() => viewMovie(movie._id)}
+                imageSrc={movie.imageUrl}
+                title={movie.title}
+              ></Card>
+            </div>
+          ))}
+      </div>
+      : <EmptyState />
+      }
         <div className="flex  justify-end mt-2">
           <Pagination
             items={moviesList?.length}
